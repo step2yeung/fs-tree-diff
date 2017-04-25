@@ -30,15 +30,15 @@ describe('Entry', function() {
       }).to.throw('Expected `mode` to be of type `number` but was of type `string` instead.')
     });
 
-    it('strips trailing /', function() {
-      expect(new Entry('/foo/', 0, 0, Entry.DIRECTORY_MODE).relativePath).to.eql('/foo');
+    it('strips leading and trailing /', function() {
+      expect(new Entry('/foo/bar/', 0, 0, Entry.DIRECTORY_MODE).relativePath).to.eql('foo/bar');
     });
   });
 
   describe('.fromPath', function () {
     it('infers directories from trailing /', function() {
       let entry = Entry.fromPath('/foo/');
-      expect(entry.relativePath).to.equal('/foo');
+      expect(entry.relativePath).to.equal('foo');
       expect(entry.size).to.equal(0);
       expect(entry.mtime).to.be.gt(0);
       expect(isDirectory(entry)).to.eql(true);
